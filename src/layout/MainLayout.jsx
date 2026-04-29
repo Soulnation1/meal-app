@@ -1,6 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import { NavLink } from "react-router-dom";
+import { Home, Utensils, Calendar, ShoppingCart } from "lucide-react";
+
 
 const MainLayout = () => {
   return (
@@ -15,41 +17,52 @@ const MainLayout = () => {
       </div>
 
       {/* MOBILE NAV */}
-      <div className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around py-4 md:hidden">
+      <div className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around py-4 md:hidden ">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive
+            `flex items-center gap-1
+          ${isActive
               ? "text-[#1d3e29] font-semibold bg-white/10"
-              : "text-gray-500 text-xs"
+              : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >
-          Home
+         <Home size={16} /> Home
         </NavLink>
 
         <NavLink
           to="/meal-plan"
           className={({ isActive }) =>
-            isActive ? "text-[#1d3e29] font-semibold" : "text-gray-500 text-xs"
+            `flex items-center gap-1 
+          ${isActive
+              ? "text-[#1d3e29] font-semibold bg-white/10"
+              : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >
-          Plan
+         <Calendar size={16} /> Meal Plan
         </NavLink>
         <NavLink
           to="/recipes"
           className={({ isActive }) =>
-            isActive ? "text-[#1d3e29] font-semibold" : "text-gray-500 text-xs"
+            `flex items-center gap-1
+          ${isActive
+              ? "text-[#1d3e29] font-semibold bg-white/10"
+              : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
+
           }
         >
-          Recipes
+         <Utensils size={16} /> Recipes
         </NavLink>
         <NavLink
           to="/grocery"
           className={({ isActive }) =>
-            isActive ? "text-[#1d3e29] font-semibold" : "text-gray-500 text-xs"
+            `flex items-center gap-1 
+          ${isActive
+              ? "text-[#1d3e29] font-semibold bg-white/10"
+              : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >
-          List
+         <ShoppingCart size={16} /> Grocery
         </NavLink>
 
         <span className="text-xs text-gray-400">Profile</span>

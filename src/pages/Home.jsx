@@ -4,15 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useMeal } from "../context/MealContext";
 import "../styles/animations.css";
-
+import {
+  Utensils,
+  EyeIcon,
+  Calendar,
+  ShoppingCart,
+  Activity,
+} from "lucide-react";
 
 const Home = () => {
   const navigate = useNavigate();
   const actions = [
-    { name: "Recipes", path: "/recipes" },
-    { name: "Planner", path: "/meal-plan" },
-    { name: "Groceries", path: "/grocery" },
-    { name: "Nutrition", path: "/nutrition" },
+    { name: "Recipes", path: "/recipes", icon: Utensils },
+    { name: "Planner", path: "/meal-plan", icon: Calendar },
+    { name: "Groceries", path: "/grocery", icon: ShoppingCart },
+    { name: "Nutrition", path: "/nutrition", icon: Activity },
   ];
   const { user } = useUser();
   const { plans } = useMeal();
@@ -44,9 +50,9 @@ const Home = () => {
 
             <button
               onClick={() => navigate("/meal-plan")}
-              className="text-sm underline"
+              className="text-[10px]  flex items-center gap-1 hover:text-green-300/80 hover:translate-y-1 transition-all duration-300 hover:border border-white rounded-md p-0.5 "
             >
-              View Plan
+              <EyeIcon size={16} /> View Plan
             </button>
           </div>
 
@@ -70,7 +76,8 @@ const Home = () => {
             <Card
               key={item.name}
               onClick={() => navigate(item.path)}
-              className="text-center font-medium cursor-pointer"
+              Icon={item.icon}
+              className="text-center text-[[#1d3e29]] font-medium cursor-pointer"
             >
               {item.name}
             </Card>
@@ -80,7 +87,7 @@ const Home = () => {
         {/* RECOMMENDED */}
         <div className="mt-8">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="font-semibold">Recommended</h3>
+            <h3 className="font-semibold text-[#1d3e29]">Recommended</h3>
             <button
               onClick={() => navigate("/recipes")}
               className="text-sm text-[#1d3e29] font-medium"
