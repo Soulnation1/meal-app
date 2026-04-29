@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "../styles/animations.css";
+import { Home, Utensils, Calendar, ShoppingCart } from "lucide-react";
 
 const Sidebar = () => {
   return (
@@ -16,7 +17,7 @@ const Sidebar = () => {
               : "text-white/90 text-sm font-semibold px-3 py-2  hover:translate-y-1 transition-all duration-300"
           }
         >
-          Home
+          <Home size={18} />Home
         </NavLink>
 
         <NavLink
@@ -27,7 +28,7 @@ const Sidebar = () => {
               : "text-white/90 text-sm font-semibold px-3 py-2  hover:translate-y-1 transition-all duration-300"
           }
         >
-          Meal Plan
+         <Calendar size={18} /> Meal Plan
         </NavLink>
         <NavLink
           to="/recipes"
@@ -37,7 +38,7 @@ const Sidebar = () => {
               : "text-white/90 text-sm font-semibold px-3 py-2  hover:translate-y-1 transition-all duration-300"
           }
         >
-          Recipes
+         <Utensils size={18} /> Recipes
         </NavLink>
         <NavLink
           to="/grocery"

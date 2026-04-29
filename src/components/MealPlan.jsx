@@ -2,6 +2,7 @@ import { useState } from "react";
 import Card from "../components/Card";
 import { useMeal } from "../context/MealContext";
 import PageHeader from "../components/PageHeader";
+// import { CheckCircle } from "lucide-react";
 
 const MealPlan = () => {
 const { plans, activeDay, setActiveDay } = useMeal();

@@ -5,6 +5,7 @@ import { useUser } from "../context/UserContext";
 import { useMeal } from "../context/MealContext";
 import "../styles/animations.css";
 
+
 const Home = () => {
   const navigate = useNavigate();
   const actions = [
@@ -31,7 +32,7 @@ const Home = () => {
           <h2 className="text-xl font-semibold">Hi, {user.name} 👩‍🍳</h2>
           <img
             src={user.avatar}
-            alt=""
+            alt="profile picture"
             className="w-10 h-10 rounded-full object-cover"
           />{" "}
         </div>

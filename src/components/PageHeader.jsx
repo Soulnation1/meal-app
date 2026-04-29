@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 const PageHeader = ({ title, showBack = false, right }) => {
   const navigate = useNavigate();
@@ -7,14 +8,11 @@ const PageHeader = ({ title, showBack = false, right }) => {
     <div className="flex justify-between items-center mb-6">
 
       <div className="flex items-center gap-3">
-        {showBack && (
-          <button
-            onClick={() => navigate(-1)}
-            className="text-gray-500 text-sm"
-          >
-            ←
-          </button>
-        )}
+      {showBack && (
+  <button onClick={() => navigate(-1)}>
+    <ArrowLeft size={18} />
+  </button>
+)}
 
         <h2 className="text-xl font-semibold">{title}</h2>
       </div>
