@@ -3,6 +3,7 @@ import RecipeCard from "../components/RecipeCard";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
 import { useMeal } from "../context/MealContext";
+import "../styles/animations.css";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,6 +20,12 @@ const Home = () => {
   return (
     <div className="flex bg-gray-100 min-h-screen w-full overflow-x-hidden">
       <div className="flex-1 min-w-0 pb-24 md:pb-6 ">
+        <div className="animate-fade-in-scale mb-6 md:hidden hover:translate-y-1 transition-all duration-300">
+          <h1 className="font-bold text-lg text-center">
+            Meal
+            <span className="italic text-[#1d3e29] font-semibold">safe</span>
+          </h1>
+        </div>
         {/* HEADER */}
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">Hi, {user.name} 👩‍🍳</h2>
