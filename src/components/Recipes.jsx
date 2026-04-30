@@ -1,38 +1,29 @@
 import RecipeCard from "../components/RecipeCard";
 import { useState } from "react";
+import { useUser } from "../context/UserContext";
+import PageHeader from "./PageHeader";
 
 const recipes = [
   {
     id: 1,
-    name: "Chicken Bowl",
+    name: "Amala & Ewedu",
     category: "Lunch",
-    kcal: 620,
-    image: "/chicken-bowl.jpg",
-    rating: 4.5,
+    culture: "Yoruba",
+    kcal: 700,
   },
   {
     id: 2,
-    name: "Oatmeal & Banana",
-    category: "Breakfast",
-    kcal: 350,
-    image: "/oatmeal.jpg",
-    rating: 4.2,
+    name: "Ofe Nsala",
+    category: "Dinner",
+    culture: "Igbo",
+    kcal: 650,
   },
   {
     id: 3,
-    name: "Rice & Stew",
-    category: "Dinner",
-    kcal: 500,
-    image: "/rice-stew.jpg",
-    rating: 4.7,
-  },
-  {
-    id: 4,
-    name: "Grilled Chicken Salad",
+    name: "Jollof Rice",
     category: "Lunch",
-    kcal: 400,
-    image: "/chicken-salad.jpg",
-    rating: 4.5,
+    culture: "All", // 👈 universal
+    kcal: 600,
   },
 ];
 
@@ -42,18 +33,22 @@ const Recipes = () => {
   const filteredRecipes =
     activeFilter === "All"
       ? recipes
-      : recipes.filter(
-          (recipe) => recipe.category === activeFilter
-        );
+      : recipes.filter((recipe) => recipe.category === activeFilter);
+      const { user } = useUser();
+
+  const finalRecipes = filteredRecipes.filter(
+    (recipe) =>
+      user.activeCulture === "All" ||
+      recipe.culture === user.activeCulture ||
+      recipe.culture === "All",
+  );
 
   return (
     <div>
       {/* HEADER */}
       <div className="mb-6">
-        <h2 className="text-xl font-semibold">Recipes</h2>
-        <p className="text-sm text-gray-500">
-          Find meals you’ll love
-        </p>
+<PageHeader showBack title={"Recipes"} />
+        <p className="text-sm text-gray-500">Find meals you’ll love</p>
       </div>
 
       {/* SEARCH */}
@@ -61,7 +56,7 @@ const Recipes = () => {
         <input
           type="text"
           placeholder="Search recipes..."
-          className="w-full p-3 rounded-xl border outline-none"
+          className="w-full p-3 rounded-xl border border-[#061a00] outline-none"
         />
       </div>
 
@@ -72,9 +67,7 @@ const Recipes = () => {
             key={item}
             onClick={() => setActiveFilter(item)}
             className={`px-4 py-2 rounded-full text-sm ${
-              activeFilter === item
-                ? "bg-[#1d3e29] text-white"
-                : "bg-white"
+              activeFilter === item ? "bg-[#061a00] text-white" : "bg-white"
             }`}
           >
             {item}
@@ -84,7 +77,7 @@ const Recipes = () => {
 
       {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        {filteredRecipes.map((recipe) => (
+        {finalRecipes.map((recipe) => (
           <RecipeCard key={recipe.id} recipe={recipe} />
         ))}
       </div>

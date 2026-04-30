@@ -23,7 +23,7 @@ const MainLayout = () => {
           className={({ isActive }) =>
             `flex items-center gap-1
           ${isActive
-              ? "text-[#1d3e29] font-semibold bg-white/10"
+              ? "text-[#061a00] font-semibold bg-white/10"
               : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >
@@ -35,7 +35,7 @@ const MainLayout = () => {
           className={({ isActive }) =>
             `flex items-center gap-1 
           ${isActive
-              ? "text-[#1d3e29] font-semibold bg-white/10"
+              ? "text-[#061a00] font-semibold bg-white/10"
               : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >
@@ -46,7 +46,7 @@ const MainLayout = () => {
           className={({ isActive }) =>
             `flex items-center gap-1
           ${isActive
-              ? "text-[#1d3e29] font-semibold bg-white/10"
+              ? "text-[#061a00] font-semibold bg-white/10"
               : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
 
           }
@@ -58,7 +58,7 @@ const MainLayout = () => {
           className={({ isActive }) =>
             `flex items-center gap-1 
           ${isActive
-              ? "text-[#1d3e29] font-semibold bg-white/10"
+              ? "text-[#061a00] font-semibold bg-white/10"
               : "text-gray-500 text-xs  hover:translate-y-1 transition-all duration-300"}`
           }
         >

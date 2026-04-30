@@ -20,9 +20,10 @@ const Home = () => {
     { name: "Groceries", path: "/grocery", icon: ShoppingCart },
     { name: "Nutrition", path: "/nutrition", icon: Activity },
   ];
-  const { user } = useUser();
+  const { user, setActiveCulture } = useUser();
   const { plans } = useMeal();
   const todayPlan = plans ? plans[0] : {};
+  const cultures = user?.cultures || ["Yoruba", "Igbo"];
 
   return (
     <div className="flex bg-gray-100 min-h-screen w-full overflow-x-hidden">
@@ -30,21 +31,41 @@ const Home = () => {
         <div className="animate-fade-in-scale mb-6 md:hidden hover:translate-y-1 transition-all duration-300">
           <h1 className="font-bold text-lg text-center">
             Meal
-            <span className="italic text-[#1d3e29] font-semibold">safe</span>
+            <span className="italic text-[#061a00] font-semibold">safe</span>
           </h1>
         </div>
         {/* HEADER */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">Hi, {user.name} 👩‍🍳</h2>
+        <div className="flex justify-between">
+          <div className="">
+          <label className="text-md font-bold mr-2 text-[#061a00]">Mode</label>
+
+          <select
+            value={user.activeCulture}
+            onChange={(e) => setActiveCulture(e.target.value)}
+            className=" mt-1 p-1 rounded-md border border-[#061a00] bg-white text-[#061a00]"
+          >
+            {cultures.map((culture) => (
+  <option key={culture} value={culture} className="hover:translate-y-1 transition-all duration-300">
+    {culture}
+  </option>
+))}
+
+            <option value="All">All</option>
+          </select>
+        </div>
+
+        <div className="flex  items-center gap-2 mb-6">
+          <h2 className="text-xl font-semibold">Hi, {user.name}</h2>
           <img
             src={user.avatar}
             alt="profile picture"
-            className="w-10 h-10 rounded-full object-cover"
-          />{" "}
+            className="w-8 h-8 rounded-full object-cover"
+          />
+        </div>
         </div>
 
         {/* TODAY PLAN */}
-        <div className="bg-[#1d3e29] text-white p-5 rounded-2xl shadow-md">
+        <div className="bg-[#061a00] text-white p-5 rounded-2xl shadow-md">
           <div className="flex justify-between items-center mb-3">
             <h3 className="font-semibold">Today’s Plan</h3>
 
@@ -77,7 +98,7 @@ const Home = () => {
               key={item.name}
               onClick={() => navigate(item.path)}
               Icon={item.icon}
-              className="text-center text-[[#1d3e29]] font-medium cursor-pointer"
+              className="text-center text-[#061a00] font-medium cursor-pointer"
             >
               {item.name}
             </Card>
@@ -87,10 +108,10 @@ const Home = () => {
         {/* RECOMMENDED */}
         <div className="mt-8">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="font-semibold text-[#1d3e29]">Recommended</h3>
+            <h3 className="font-semibold text-[#061a00]">Recommended</h3>
             <button
               onClick={() => navigate("/recipes")}
-              className="text-sm text-[#1d3e29] font-medium"
+              className="text-sm text-[#061a00] font-medium"
             >
               See all
             </button>{" "}

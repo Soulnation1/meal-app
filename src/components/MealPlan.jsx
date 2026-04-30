@@ -2,7 +2,8 @@ import { useState } from "react";
 import Card from "../components/Card";
 import { useMeal } from "../context/MealContext";
 import PageHeader from "../components/PageHeader";
-// import { CheckCircle } from "lucide-react";
+import { Calendar } from "lucide-react";
+
 
 const MealPlan = () => {
 const { plans, activeDay, setActiveDay } = useMeal();
@@ -36,11 +37,13 @@ const { plans, activeDay, setActiveDay } = useMeal();
 
       <div className="flex justify-between items-center mb-6">
         <PageHeader title="Meal Plan" showBack />
-        <h2 className="text-xl font-semibold">calendar icon</h2>
+
+             <Calendar/>
+           
       </div>
 
       {/* SUMMARY */}
-      <div className="bg-[#1d3e29] text-white p-5 rounded-2xl shadow-md">
+      <div className="bg-[#061a00] text-white p-5 rounded-2xl shadow-md">
         <h3 className="font-semibold">Today’s Intake</h3>
         <p className="text-sm opacity-90">{totalCalories} kcal</p>
       </div>
@@ -50,7 +53,7 @@ const { plans, activeDay, setActiveDay } = useMeal();
             key={day}
             onClick={() => setActiveDay(index)}
             className={`px-4 py-2 rounded-xl  text-sm cursor-pointer ${
-              activeDay === index ? "bg-[#1d3e29] text-white" : "bg-white"
+              activeDay === index ? "bg-[#061a00] text-white" : "bg-white"
             }`}
           >
             {day}
@@ -72,32 +75,27 @@ const { plans, activeDay, setActiveDay } = useMeal();
             </div>
 
             {/* CARD */}
-            <Card className="flex items-center gap-4 ">
-              <div className="w-12 h-12 bg-gray-200 rounded-xl "></div>
-              <div className="flex justify-between items-center w-full  ">
-                <div className="flex flex-col gap-1 ">
-                  <p className="text-sm  ">
-                    {currentPlan[meal.title]
-                      ? `✅ ${currentPlan[meal.title].name}`
-                      : meal.food}
-                  </p>
+            <Card className="flex items-center gap-4 w-full">
+  <div className="w-12 h-12 bg-gray-200 rounded-xl" />
 
-                  <span className="text-sm ">
-                    {currentPlan[meal.title]
-                      ? currentPlan[meal.title].kcal
-                      : meal.kcal}{" "}
-                    kcal
-                  </span>
-                </div>
+  <div className="flex flex-1 items-center justify-between">
+    <div className="flex flex-col gap-1">
+      <p className="text-sm">
+        {currentPlan[meal.title]
+          ? `✅ ${currentPlan[meal.title].name}`
+          : meal.food}
+      </p>
 
-                <input
-                  type="checkbox"
-                  checked={checked[meal.title]}
-                  onChange={() => toggleCheck(meal.title)}
-                  className="w-4 h-4 accent-[#1d3e29] rounded-full cursor-pointer  border-red-500 "
-                />
-              </div>
-            </Card>
+      <span className="text-sm">
+        {currentPlan[meal.title]
+          ? currentPlan[meal.title].kcal
+          : meal.kcal} kcal
+      </span>
+    </div>
+
+    
+  </div>
+</Card>
           </div>
         ))}
       </div>

@@ -1,31 +1,47 @@
 import { createContext, useContext, useState } from "react";
+import { useEffect } from "react";
 
 const MealContext = createContext();
 
 export const MealProvider = ({ children }) => {
-  const [plans, setPlans] = useState({
-  0: { Breakfast: null, Lunch: null, Dinner: null },
-  1: { Breakfast: null, Lunch: null, Dinner: null },
-  2: { Breakfast: null, Lunch: null, Dinner: null },
-  3: { Breakfast: null, Lunch: null, Dinner: null },
-  4: { Breakfast: null, Lunch: null, Dinner: null },
-  5: { Breakfast: null, Lunch: null, Dinner: null },
-  6: { Breakfast: null, Lunch: null, Dinner: null },
-});
+  const [plans, setPlans] = useState(() => {
+    const saved = localStorage.getItem("mealPlans");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          0: {},
+          1: {},
+          2: {},
+          3: {},
+          4: {},
+          5: {},
+          6: {},
+        };
+  });
 
- const addToPlan = (day, mealType, recipe) => {
-  setPlans((prev) => ({
-    ...prev,
-    [day]: {
-      ...prev[day],
-      [mealType]: recipe,
-    },
-  }));
-};
-const [activeDay, setActiveDay] = useState(0);
+  useEffect(() => {
+    localStorage.setItem("mealPlans", JSON.stringify(plans));
+  }, [plans]);
+
+  const addToPlan = (day, mealType, recipe) => {
+    setPlans((prev) => ({
+      ...prev,
+      [day]: {
+        ...prev[day],
+        [mealType]: recipe,
+      },
+    }));
+  };
+
+  const [activeDay, setActiveDay] = useState(() => {
+    return Number(localStorage.getItem("activeDay")) || 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("activeDay", activeDay);
+  }, [activeDay]);
   return (
-    <MealContext.Provider value={{ plans, addToPlan,activeDay,
-    setActiveDay, }}>
+    <MealContext.Provider value={{ plans, addToPlan, activeDay, setActiveDay }}>
       {children}
     </MealContext.Provider>
   );

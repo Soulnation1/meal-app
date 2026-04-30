@@ -1,3 +1,4 @@
+import PageHeader from "../components/PageHeader";
 import { useMeal } from "../context/MealContext";
 import { useState } from "react";
 
@@ -34,8 +35,7 @@ const { plans, activeDay } = useMeal();
 
   return (
     <div>
-      <h2 className="text-xl font-semibold mb-6">Grocery List</h2>
-
+<PageHeader showBack title={"Grocery List"}  />
       {groceryItems.length === 0 ? (
         <p>No items yet</p>
       ) : (
@@ -47,7 +47,7 @@ const { plans, activeDay } = useMeal();
                 onClick={() => toggleItem(item)}
                 className={`p-3 rounded-lg cursor-pointer transition-all ${
                   checkedItems.has(item)
-                    ? "bg-[#1d3e29] line-through text-white font-bold "
+                    ? "bg-[#061a00] line-through text-white font-bold "
                     : "bg-gray-50 hover:bg-gray-100 text-gray-700"
                 }`}
               >

@@ -1,15 +1,30 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "Alex",
-    avatar: "/avatar.png", // fallback
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser
+      ? JSON.parse(savedUser)
+      : {
+          name: "Guest",
+          avatar: "https://i.pravatar.cc/150",
+            cultures: ["Yoruba", "Igbo"], // 👈 default for now
+        activeCulture: "Yoruba", // 👈 current mode
+        };
   });
-
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+  const setActiveCulture = (culture) => {
+  setUser((prev) => ({
+    ...prev,
+    activeCulture: culture,
+  }));
+};
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser,setActiveCulture, }}>
       {children}
     </UserContext.Provider>
   );

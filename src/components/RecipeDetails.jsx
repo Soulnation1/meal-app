@@ -75,7 +75,7 @@ const { addToPlan, activeDay } = useMeal();
 
         <button
           onClick={handleAddToPlan}
-          className="mt-6 w-full bg-[#1d3e29] text-white py-3 rounded-xl"
+          className="mt-6 w-full bg-[#061a00] text-white py-3 rounded-xl"
         >
           {isAdded
             ? "🥙 Added! Go to Grocery"
