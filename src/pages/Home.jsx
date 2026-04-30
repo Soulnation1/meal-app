@@ -26,14 +26,26 @@ const Home = () => {
   const cultures = user?.cultures || ["Yoruba", "Igbo"];
 
   return (
-    <div className="flex bg-gray-100 min-h-screen w-full overflow-x-hidden">
+    <div className="flex  min-h-screen w-full overflow-x-hidden">
       <div className="flex-1 min-w-0 pb-24 md:pb-6 ">
-        <div className="animate-fade-in-scale mb-6 md:hidden hover:translate-y-1 transition-all duration-300">
-          <h1 className="font-bold text-lg text-center">
-            Meal
-            <span className="italic text-[#061a00] font-semibold">safe</span>
-          </h1>
-        </div>
+        <div className="relative mb-6 md:hidden rounded-2xl p-[2px] bg-gradient-to-r from-[#1d3e29] via-[#2f6f4e] to-[#1d3e29] shadow-xl animate-fade-in-scale">
+  
+  {/* inner container */}
+  <div className="bg-white rounded-2xl px-5 py-4 flex items-center justify-center relative overflow-hidden">
+
+    {/* subtle glow effect */}
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1d3e29]/10 to-transparent opacity-40 animate-pulse hover:scale-[1.02]" />
+
+    {/* logo text */}
+    <h1 className="text-[26px] font-extrabold tracking-wide text-gray-800 z-10 drop-shadow-sm">
+      Taste
+      <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#1d3e29] to-[#4ade80] ml-1">
+        Sync
+      </span>
+    </h1>
+
+  </div>
+</div>
         {/* HEADER */}
         <div className="flex justify-between">
           <div className="">
