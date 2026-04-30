@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "../styles/animations.css";
 import { Home, Utensils, Calendar, ShoppingCart } from "lucide-react";
+import TasteSyncLogo from "./Logo";
 
 const Sidebar = () => {
   return (
@@ -9,12 +10,7 @@ const Sidebar = () => {
       <div className="flex flex-col h-full bg-[#061a00] rounded-r-2xl p-6">
         {/* LOGO */}
         <div className="mb-10 animate-fade-in-scale">
-          <h2 className="text-3xl font-extrabold tracking-wide text-white">
-            Taste
-            <span className="ml-1 italic text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-emerald-500">
-              Sync
-            </span>
-          </h2>
+         <TasteSyncLogo size={36} />
 
           {/* subtle divider */}
           <div className="mt-3 h-[2px] w-12 bg-gradient-to-r from-green-400 to-transparent rounded-full" />

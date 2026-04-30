@@ -2,6 +2,7 @@ import RecipeCard from "../components/RecipeCard";
 import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import PageHeader from "./PageHeader";
+import Culture from "./Culture";
 
 const recipes = [
   {
@@ -13,16 +14,17 @@ const recipes = [
   },
   {
     id: 2,
-    name: "Ofe Nsala",
-    category: "Dinner",
+    name: "Akpu & Egusi",
+    category: "Lunch",
     culture: "Igbo",
-    kcal: 650,
+    kcal: 700,
   },
+
   {
     id: 3,
     name: "Jollof Rice",
     category: "Lunch",
-    culture: "All", // 👈 universal
+    culture: "All",
     kcal: 600,
   },
 ];
@@ -34,7 +36,7 @@ const Recipes = () => {
     activeFilter === "All"
       ? recipes
       : recipes.filter((recipe) => recipe.category === activeFilter);
-      const { user } = useUser();
+  const { user } = useUser();
 
   const finalRecipes = filteredRecipes.filter(
     (recipe) =>
@@ -46,9 +48,14 @@ const Recipes = () => {
   return (
     <div>
       {/* HEADER */}
-      <div className="mb-6">
-<PageHeader showBack title={"Recipes"} />
-        <p className="text-sm text-gray-500">Find meals you’ll love</p>
+      <div className="flex justify-between mb-6 ">
+        <div>
+          <PageHeader showBack title={"Recipes"} />
+          <p className="text-sm text-gray-500 italic">Find meals you’ll love</p>
+        </div>
+        <div>
+          <Culture />
+        </div>
       </div>
 
       {/* SEARCH */}
