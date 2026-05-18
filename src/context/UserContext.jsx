@@ -10,21 +10,21 @@ export const UserProvider = ({ children }) => {
       : {
           name: "Guest",
           avatar: "https://i.pravatar.cc/150",
-            cultures: ["Yoruba", "Igbo"], // 👈 default for now
-        activeCulture: "Yoruba", // 👈 current mode
+          cultures: ["Yoruba", "Igbo"],
+          activeCulture: "Blend",
         };
   });
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
   const setActiveCulture = (culture) => {
-  setUser((prev) => ({
-    ...prev,
-    activeCulture: culture,
-  }));
-};
+    setUser((prev) => ({
+      ...prev,
+      activeCulture: culture,
+    }));
+  };
   return (
-    <UserContext.Provider value={{ user, setUser,setActiveCulture, }}>
+    <UserContext.Provider value={{ user, setUser, setActiveCulture }}>
       {children}
     </UserContext.Provider>
   );

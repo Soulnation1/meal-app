@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useMeal } from "../context/MealContext";
 import PageHeader from "../components/PageHeader";
 
@@ -10,6 +10,9 @@ const recipes = [
     kcal: 620,
     image: "/chicken-bowl.jpg",
     rating: 4.5,
+    ingredients: ["Chicken", "Rice", "Vegetables"],
+    description:
+      "A balanced bowl packed with protein, grains, and fresh greens.",
   },
   {
     id: 2,
@@ -17,70 +20,87 @@ const recipes = [
     kcal: 350,
     image: "/oatmeal.jpg",
     rating: 4.2,
+    ingredients: ["Oats", "Banana", "Milk"],
+    description: "A creamy, energizing breakfast to fuel your day.",
   },
 ];
 
 const RecipeDetails = () => {
   const { id } = useParams();
-const { addToPlan, activeDay } = useMeal();
+  const { addToPlan, activeDay } = useMeal();
   const [isAdded, setIsAdded] = useState(false);
+  const navigate = useNavigate();
+  const recipe = recipes.find((item) => item.id === Number(id));
 
-  // ✅ GET CURRENT RECIPE
-  const recipe = recipes.find(
-    (item) => item.id === Number(id)
-  );
-
-  // ✅ SAFETY
   if (!recipe) {
-    return <p>Recipe not found</p>;
+    return <p className="text-slate-600">Recipe not found</p>;
   }
 
   const handleAddToPlan = () => {
     addToPlan(activeDay, "Lunch", {
-  name: recipe.name,
-  kcal: recipe.kcal,
-});
+      name: recipe.name,
+      kcal: recipe.kcal,
+    });
 
     setIsAdded(true);
+    setTimeout(() => {
+      navigate("/meal-plan");
+    }, 800);
   };
 
   return (
-    <div>
-      {/* HEADER */}
+    <div className="space-y-6">
       <PageHeader title="Recipe" showBack />
 
-      {/* IMAGE */}
-      <img
-        src={recipe.image}
-        alt={recipe.name}
-        className="w-[60%] mx-auto h-auto object-cover rounded-2xl"
-      />
+      <div className="glass-card rounded-[32px] overflow-hidden shadow-xl">
+        <img
+          src={recipe.image}
+          alt={recipe.name}
+          className="w-full object-cover brightness-95"
+        />
+        <div className="p-6">
+          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="text-3xl font-semibold text-slate-900">
+                {recipe.name}
+              </h2>
+              <p className="mt-2 text-slate-500">{recipe.description}</p>
+            </div>
+            <div className="rounded-3xl bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700">
+              ⭐ {recipe.rating}
+            </div>
+          </div>
 
-      {/* CONTENT */}
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold">
-          {recipe.name}
-        </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="rounded-3xl border border-emerald-200/90 bg-emerald-50/85 p-5">
+              <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
+                Nutrition
+              </p>
+              <p className="mt-2 text-2xl font-semibold text-slate-900">
+                {recipe.kcal} kcal
+              </p>
+            </div>
+            <div className="rounded-3xl border border-emerald-200/90 bg-emerald-50/85 p-5">
+              <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
+                Ingredients
+              </p>
+              <ul className="mt-3 space-y-2 text-slate-700">
+                {recipe.ingredients.map((item) => (
+                  <li key={item} className="rounded-2xl bg-slate-50 px-3 py-2">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-        <p className="text-sm text-gray-500 mt-1">
-          {recipe.kcal} kcal • ⭐ {recipe.rating}
-        </p>
-
-        <h3 className="mt-4 font-semibold">Ingredients</h3>
-        <ul className="text-sm text-gray-600 mt-2 space-y-1">
-          <li>Chicken</li>
-          <li>Rice</li>
-          <li>Vegetables</li>
-        </ul>
-
-        <button
-          onClick={handleAddToPlan}
-          className="mt-6 w-full bg-[#061a00] text-white py-3 rounded-xl"
-        >
-          {isAdded
-            ? "🥙 Added! Go to Grocery"
-            : "Add to Plan"}
-        </button>
+          <button
+            onClick={handleAddToPlan}
+            className="button-pill mt-6 w-full rounded-3xl bg-gradient-to-r from-emerald-600 to-emerald-700 px-6 py-4 text-base font-semibold text-white shadow-lg transition hover:from-emerald-500 hover:to-emerald-600"
+          >
+            {isAdded ? "🥙 Added! Redirecting..." : "Add to Plan"}
+          </button>
+        </div>
       </div>
     </div>
   );

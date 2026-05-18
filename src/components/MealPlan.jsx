@@ -1,26 +1,97 @@
 import { useState } from "react";
-import Card from "../components/Card";
 import { useMeal } from "../context/MealContext";
 import PageHeader from "../components/PageHeader";
-import { Calendar } from "lucide-react";
-
+import { useUser } from "../context/UserContext";
+import Culture from "../components/Culture";
 
 const MealPlan = () => {
-const { plans, activeDay, setActiveDay } = useMeal();
+  const { plans, activeDay, setActiveDay, lastUpdatedBy } = useMeal();
   const currentPlan = plans[activeDay];
-
   const [checked, setChecked] = useState({
     Breakfast: false,
     Lunch: false,
     Dinner: false,
   });
 
-  const meals = [
-    { title: "Breakfast", food: "Oatmeal & Banana", kcal: 350 },
-    { title: "Lunch", food: "Grilled Chicken Salad", kcal: 520 },
-    { title: "Dinner", food: "Rice & Stew", kcal: 600 },
-  ];
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const { user } = useUser();
+  const blendRotation = ["Yoruba", "Igbo", "All"];
+  const todayIndex = new Date().getDay();
+  const blendedCulture = blendRotation[todayIndex % blendRotation.length];
+  const activeCulture =
+    user.activeCulture === "Blend" ? blendedCulture : user.activeCulture;
+  const culturalMeals = {
+    Yoruba: {
+      Breakfast: [
+        { food: "Akara & Pap", kcal: 350 },
+        { food: "Yam & Egg", kcal: 400 },
+        { food: "Moi Moi & Custard", kcal: 370 },
+      ],
+      Lunch: [
+        { food: "Amala & Ewedu", kcal: 700 },
+        { food: "Ofada Rice", kcal: 650 },
+        { food: "Eba & Egusi", kcal: 720 },
+      ],
+      Dinner: [
+        { food: "Jollof Rice", kcal: 600 },
+        { food: "Pounded Yam", kcal: 750 },
+        { food: "Beans & Dodo", kcal: 550 },
+      ],
+    },
+    Igbo: {
+      Breakfast: [
+        { food: "Okpa", kcal: 300 },
+        { food: "Akamu & Bread", kcal: 350 },
+        { food: "Yam Porridge", kcal: 420 },
+      ],
+      Lunch: [
+        { food: "Ofe Nsala", kcal: 720 },
+        { food: "Abacha", kcal: 500 },
+        { food: "Fufu & Oha Soup", kcal: 760 },
+      ],
+      Dinner: [
+        { food: "White Rice & Stew", kcal: 600 },
+        { food: "Nkwobi", kcal: 650 },
+        { food: "Beans & Plantain", kcal: 540 },
+      ],
+    },
+    All: {
+      Breakfast: [
+        { food: "Bread & Egg", kcal: 320 },
+        { food: "Pancakes", kcal: 400 },
+        { food: "Tea & Sandwich", kcal: 350 },
+      ],
+      Lunch: [
+        { food: "Jollof Rice", kcal: 600 },
+        { food: "Fried Rice & Chicken", kcal: 750 },
+        { food: "Spaghetti", kcal: 550 },
+      ],
+      Dinner: [
+        { food: "Chicken Salad", kcal: 450 },
+        { food: "Rice & Beans", kcal: 520 },
+        { food: "Noodles & Egg", kcal: 480 },
+      ],
+    },
+  };
+  const mealCategories = ["Breakfast", "Lunch", "Dinner"];
+  const meals = mealCategories.map((category) => {
+    const options =
+      culturalMeals[activeCulture]?.[category] ||
+      culturalMeals["All"][category];
+    const rotationIndex = (activeDay + todayIndex) % options.length;
+    const selectedMeal = options[rotationIndex];
+
+    return {
+      title: category,
+      food: selectedMeal.food,
+      kcal: selectedMeal.kcal,
+    };
+  });
+
+  const totalCalories = meals.reduce((sum, meal) => {
+    const selected = currentPlan[meal.title];
+    return sum + (selected ? selected.kcal : meal.kcal);
+  }, 0);
 
   const toggleCheck = (meal) => {
     setChecked((prev) => ({
@@ -28,74 +99,93 @@ const { plans, activeDay, setActiveDay } = useMeal();
       [meal]: !prev[meal],
     }));
   };
-  const totalCalories = Object.values(currentPlan)
-  .filter(Boolean)
-  .reduce((sum, meal) => sum + meal.kcal, 0);
+
   return (
-    <div>
-      {/* HEADER */}
-
-      <div className="flex justify-between items-center mb-6">
+    <div className="space-y-6">
+      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
         <PageHeader title="Meal Plan" showBack />
-
-             <Calendar/>
-           
+        <Culture />
       </div>
 
-      {/* SUMMARY */}
-      <div className="bg-[#061a00] text-white p-5 rounded-2xl shadow-md">
-        <h3 className="font-semibold">Today’s Intake</h3>
-        <p className="text-sm opacity-90">{totalCalories} kcal</p>
-      </div>
-      <div className="flex gap-2 overflow-x-auto mt-6 md:justify-center">
-        {days.map((day, index) => (
-          <div
-            key={day}
-            onClick={() => setActiveDay(index)}
-            className={`px-4 py-2 rounded-xl  text-sm cursor-pointer ${
-              activeDay === index ? "bg-[#061a00] text-white" : "bg-white"
-            }`}
-          >
-            {day}
-          </div>
-        ))}
-      </div>
-
-      {/* MEALS */}
-      <div className="mt-6 space-y-6">
-        {meals.map((meal) => (
-          <div
-            onClick={() => toggleCheck(meal.title)}
-            key={meal.title}
-            className="cursor-pointer"
-          >
-            {/* TITLE + CHECKBOX (OUTSIDE CARD) */}
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="font-semibold">{meal.title}</h3>
+      <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
+        <div className="glass-card rounded-[32px] p-6 bg-gradient-to-br from-white via-emerald-50/90 to-white/95">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <p className="text-sm uppercase tracking-[0.25em] text-slate-500">
+                Today’s intake
+              </p>
+              <h3 className="mt-2 text-3xl font-semibold text-slate-900">
+                {totalCalories} kcal
+              </h3>
             </div>
+            <span className="rounded-3xl bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
+              {activeCulture}
+            </span>
+          </div>
+          {lastUpdatedBy && (
+            <p className="mt-4 text-sm text-slate-600">
+              Last updated by{" "}
+              <span className="font-semibold text-slate-900">
+                {lastUpdatedBy}
+              </span>
+            </p>
+          )}
+        </div>
 
-            {/* CARD */}
-            <Card className="flex items-center gap-4 w-full">
-  <div className="w-12 h-12 bg-gray-200 rounded-xl" />
+        <div className="glass-card rounded-[32px] p-6">
+          <h4 className="text-base font-semibold text-slate-900">
+            Weekly view
+          </h4>
+          <div className="mt-4 flex flex-wrap gap-3">
+            {days.map((day, index) => (
+              <button
+                key={day}
+                onClick={() => setActiveDay(index)}
+                className={`button-pill rounded-3xl border px-4 py-3 text-sm font-semibold transition ${
+                  activeDay === index
+                    ? "border-emerald-500 bg-emerald-100 text-emerald-800"
+                    : "border-slate-200 bg-slate-50 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/90 hover:text-emerald-800"
+                }`}
+              >
+                {day}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-  <div className="flex flex-1 items-center justify-between">
-    <div className="flex flex-col gap-1">
-      <p className="text-sm">
-        {currentPlan[meal.title]
-          ? `✅ ${currentPlan[meal.title].name}`
-          : meal.food}
-      </p>
-
-      <span className="text-sm">
-        {currentPlan[meal.title]
-          ? currentPlan[meal.title].kcal
-          : meal.kcal} kcal
-      </span>
-    </div>
-
-    
-  </div>
-</Card>
+      <div className="space-y-6">
+        {meals.map((meal) => (
+          <div key={meal.title} className="glass-card rounded-[32px] p-6">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
+                  {meal.title}
+                </p>
+                <h4 className="mt-2 text-xl font-semibold text-slate-900">
+                  {currentPlan[meal.title]
+                    ? currentPlan[meal.title].name
+                    : meal.food}
+                </h4>
+                <p className="mt-1 text-sm text-slate-500">
+                  {currentPlan[meal.title]
+                    ? currentPlan[meal.title].kcal
+                    : meal.kcal}{" "}
+                  kcal
+                </p>
+              </div>
+              <label className="inline-flex items-center gap-3 rounded-3xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 shadow-sm">
+                <input
+                  type="checkbox"
+                  checked={checked[meal.title]}
+                  onChange={() => toggleCheck(meal.title)}
+                  className="h-5 w-5 accent-emerald-700"
+                />
+                <span className="text-sm font-semibold text-emerald-800">
+                  Completed
+                </span>
+              </label>
+            </div>
           </div>
         ))}
       </div>

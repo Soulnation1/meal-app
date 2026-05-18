@@ -1,8 +1,9 @@
 import { useId } from "react";
+import { useNavigate } from "react-router-dom";
 
 const TasteSyncLogo = ({ size = 40 }) => {
   const gradientId = useId(); // 🔥 unique id per render
-
+  const navigate = useNavigate();
   return (
     <div className="flex items-center gap-2">
       <svg
@@ -25,10 +26,7 @@ const TasteSyncLogo = ({ size = 40 }) => {
         />
 
         {/* Leaf */}
-        <path
-          d="M26 20c6-2 10 2 6 6-3 3-8 2-10-2 1-2 2-3 4-4z"
-          fill="white"
-        />
+        <path d="M26 20c6-2 10 2 6 6-3 3-8 2-10-2 1-2 2-3 4-4z" fill="white" />
 
         <defs>
           <linearGradient id={gradientId} x1="0" y1="0" x2="48" y2="48">
@@ -38,12 +36,14 @@ const TasteSyncLogo = ({ size = 40 }) => {
         </defs>
       </svg>
 
-      <h1 className="text-xl font-extrabold tracking-wide text-gray-900 md:text-white animate-soft-pulse">
-        Taste
-        <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#1d3e29] to-green-400 ml-1">
-          Sync
-        </span>
-      </h1>
+      <button onClick={() => navigate("/")}>
+        <h1 className="text-xl font-extrabold tracking-wide text-gray-900 md:text-white animate-soft-pulse">
+          Taste
+          <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#1d3e29] to-green-400 ml-1">
+            Sync
+          </span>
+        </h1>
+      </button>
     </div>
   );
 };

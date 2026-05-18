@@ -11,7 +11,6 @@ import {
   ShoppingCart,
   Activity,
 } from "lucide-react";
-import TasteSyncLogo from "../components/Logo";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -24,88 +23,158 @@ const Home = () => {
   const { user } = useUser();
   const { plans } = useMeal();
   const todayPlan = plans ? plans[0] : {};
+  const recipes = [
+    {
+      id: 1,
+      name: "Amala & Ewedu",
+      culture: "Yoruba",
+      image: "/amala.jpg",
+      kcal: 700,
+      rating: 4.8,
+    },
+    {
+      id: 2,
+      name: "Ofe Nsala",
+      culture: "Igbo",
+      image: "/nsala.jpg",
+      kcal: 650,
+      rating: 4.7,
+    },
+    {
+      id: 3,
+      name: "Jollof Rice",
+      culture: "All",
+      image: "/jollof.jpg",
+      kcal: 600,
+      rating: 4.9,
+    },
+  ];
+  const blendRotation = ["Yoruba", "Igbo", "All"];
+  const todayIndex = new Date().getDay();
+  const blendedCulture = blendRotation[todayIndex % blendRotation.length];
+  const activeCulture =
+    user.activeCulture === "Blend" ? blendedCulture : user.activeCulture;
+  const recommendedRecipes = recipes.filter(
+    (recipe) =>
+      activeCulture === "All" ||
+      recipe.culture === activeCulture ||
+      recipe.culture === "All",
+  );
 
   return (
-    <div className="flex  min-h-screen w-full overflow-x-hidden">
-      <div className="flex-1 min-w-0 pb-24 md:pb-6 ">
-        <div className="relative mb-6 md:hidden rounded-2xl p-[2px] bg-gradient-to-r from-[#1d3e29] via-[#2f6f4e] to-[#1d3e29] shadow-xl animate-fade-in-scale">
-          {/* inner container */}
-          <div className="bg-white rounded-2xl px-5 py-4 flex items-center justify-center relative overflow-hidden">
-            {/* subtle glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#1d3e29]/10 to-transparent opacity-40 animate-pulse hover:scale-[1.02]" />
-
-            {/* logo text */}
-            <TasteSyncLogo size={28} />
+    <div className="min-h-full w-full overflow-x-hidden">
+      <div className="flex flex-col gap-6 pb-24 md:pb-6">
+        <div className="flex flex-col gap-4 rounded-[32px] bg-gradient-to-br from-emerald-50 via-cyan-100/90 to-emerald-100/75 p-6 shadow-xl border border-emerald-200/60 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm text-slate-600">Welcome back,</p>
+            <h1 className="text-3xl font-semibold tracking-tight text-slate-950">
+              Hi, {user.name}
+            </h1>
           </div>
-        </div>
-        {/* HEADER */}
-        <div className="flex justify-end">
-          <div className="flex  items-center gap-3 mb-6 mr-1">
-            <h2 className="text-sm md:text-md font-semibold">Hi, {user.name}</h2>
-            <img
-              src={user.avatar}
-              alt="profile picture"
-              className="w-8 h-8 rounded-full object-cover"
-            />
-          </div>
-        </div>
-
-        {/* TODAY PLAN */}
-        <div className="bg-[#061a00] text-white p-5 rounded-2xl shadow-md">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="font-semibold">Today’s Plan</h3>
-
-            <button
-              onClick={() => navigate("/meal-plan")}
-              className="text-[10px]  flex items-center gap-1 hover:text-green-300/80 hover:translate-y-1 transition-all duration-300 hover:border border-[#41E133] rounded-md p-0.5 "
-            >
-              <EyeIcon size={16} /> View Plan
-            </button>
-          </div>
-
-          <div className="text-sm space-y-1">
-            {Object.entries(todayPlan).map(([meal, value]) => (
-              <p key={meal}>
-                <span className="opacity-80">{meal}:</span>{" "}
-                {value ? (
-                  value.name
-                ) : (
-                  <span className="text-white/50">Not set</span>
-                )}
+          <div className="flex items-center gap-3">
+            <div className="rounded-3xl bg-emerald-100/80 p-1 shadow-sm">
+              <img
+                src={user.avatar}
+                alt="profile picture"
+                className="h-12 w-12 rounded-3xl object-cover"
+              />
+            </div>
+            <div className="rounded-3xl border border-emerald-200/70 bg-emerald-50/90 px-4 py-3 shadow-sm">
+              <p className="text-xs uppercase tracking-[0.25em] text-emerald-700">
+                Culture
               </p>
-            ))}
+              <p className="font-semibold text-slate-950">{activeCulture}</p>
+            </div>
           </div>
         </div>
 
-        {/* QUICK ACTIONS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-          {actions.map((item) => (
-            <Card
-              key={item.name}
-              onClick={() => navigate(item.path)}
-              Icon={item.icon}
-              className="text-center text-[#061a00] font-medium cursor-pointer "
-            >
-              {item.name}
-            </Card>
-          ))}
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <div className="glass-card rounded-[32px] p-6">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm text-slate-500">Today’s Plan</p>
+                <h2 className="text-xl font-semibold text-slate-900">
+                  Meal overview
+                </h2>
+              </div>
+              <button
+                onClick={() => navigate("/meal-plan")}
+                className=" rounded-full bg-emerald-600 px-2 py-2 text-sm font-semibold text-center text-white shadow-sm transition hover:bg-emerald-500 hover:shadow-lg"
+              >
+                <EyeIcon size={16} className="inline" />
+                <span className="ml-1 ">View Plan</span>
+              </button>
+            </div>
+
+            <div className="mt-5 space-y-2 text-slate-700">
+              {Object.entries(todayPlan).length ? (
+                Object.entries(todayPlan).map(([meal, value]) => (
+                  <p
+                    key={meal}
+                    className="rounded-3xl border border-emerald-200/80 bg-emerald-50/90 px-4 py-3"
+                  >
+                    <span className="font-semibold text-emerald-800">
+                      {meal}:
+                    </span>{" "}
+                    {value ? (
+                      value.name
+                    ) : (
+                      <span className="text-slate-500">Not set</span>
+                    )}
+                  </p>
+                ))
+              ) : (
+                <p className="text-slate-500">
+                  No meals selected yet. Start by exploring recipes.
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="glass-card rounded-[32px] p-6 md:col-span-2">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm text-slate-500">Quick actions</p>
+                <h2 className="text-xl font-semibold text-slate-900">
+                  Get cooking
+                </h2>
+              </div>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
+              {actions.map((item) => (
+                <Card
+                  key={item.name}
+                  onClick={() => navigate(item.path)}
+                  Icon={item.icon}
+                  className="justify-center text-center text-slate-900 font-semibold"
+                >
+                  {item.name}
+                </Card>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* RECOMMENDED */}
-        <div className="mt-8">
-          <div className="flex justify-between items-center mb-3">
-            <h3 className="font-semibold text-[#061a00]">Recommended</h3>
+        <div className="rounded-[32px] bg-gradient-to-br from-emerald-50 via-cyan-100/90 to-emerald-100/75 p-6 shadow-xl border border-emerald-200/60">
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold text-slate-950">
+                Recommended meals
+              </h2>
+              <p className="mt-1 text-sm text-emerald-700">
+                {activeCulture} meals for today.
+              </p>
+            </div>
             <button
               onClick={() => navigate("/recipes")}
-              className="text-sm text-[#061a00] font-medium hover:text-[#286730] hover:translate-y-1 transition-all duration-300"
+              className="text-sm font-semibold text-emerald-700 transition hover:text-emerald-900"
             >
               See all
-            </button>{" "}
+            </button>
           </div>
-
-          <div className="flex gap-4 overflow-x-auto md:grid md:grid-cols-3 md:overflow-visible">
-            {[1, 2, 3].map((item) => (
-              <RecipeCard key={item} />
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {recommendedRecipes.map((recipe) => (
+              <RecipeCard key={recipe.id} recipe={recipe} />
             ))}
           </div>
         </div>

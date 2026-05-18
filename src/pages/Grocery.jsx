@@ -3,7 +3,7 @@ import { useMeal } from "../context/MealContext";
 import { useState } from "react";
 
 const Grocery = () => {
-const { plans, activeDay } = useMeal();
+  const { plans, activeDay } = useMeal();
   const [checkedItems, setCheckedItems] = useState(new Set());
 
   const currentPlan = plans[activeDay];
@@ -34,32 +34,52 @@ const { plans, activeDay } = useMeal();
   };
 
   return (
-    <div>
-<PageHeader showBack title={"Grocery List"}  />
+    <div className="space-y-6">
+      <PageHeader showBack title="Grocery List" />
       {groceryItems.length === 0 ? (
-        <p>No items yet</p>
+        <div className="glass-card rounded-[32px] p-8 text-center text-slate-600">
+          <p className="text-lg font-semibold text-slate-900">No items yet</p>
+          <p className="mt-2 text-sm text-slate-500">
+            Add meals to your plan to generate a grocery list.
+          </p>
+        </div>
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm p-4">
+        <div className="glass-card rounded-[32px] p-6 bg-gradient-to-br from-white via-emerald-50/85 to-white/95">
+          <div className="mb-4 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold text-slate-900">
+                Shopping list
+              </h2>
+              <p className="text-sm text-slate-500">
+                Tap ingredients as you shop.
+              </p>
+            </div>
+            <span className="rounded-full bg-emerald-100 px-3 py-2 text-xs font-semibold text-emerald-800 shadow-sm">
+              {groceryItems.length} items
+            </span>
+          </div>
+
           <ul className="space-y-3">
             {groceryItems.map((item) => (
               <li
                 key={item}
                 onClick={() => toggleItem(item)}
-                className={`p-3 rounded-lg cursor-pointer transition-all ${
+                className={`flex cursor-pointer items-center justify-between gap-3 rounded-3xl border px-4 py-4 transition ${
                   checkedItems.has(item)
-                    ? "bg-[#061a00] line-through text-white font-bold "
-                    : "bg-gray-50 hover:bg-gray-100 text-gray-700"
+                    ? "border-emerald-200 bg-emerald-50 text-slate-500 line-through"
+                    : "border-slate-200 bg-white/90 hover:border-emerald-300 hover:bg-emerald-50/90 hover:text-emerald-800"
                 }`}
               >
-                <span className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     checked={checkedItems.has(item)}
                     onChange={() => toggleItem(item)}
-                    className="w-4 h-4 cursor-pointer"
+                    className="h-5 w-5 accent-emerald-600"
                   />
-                  {item}
-                </span>
+                  <span className="font-medium text-slate-800">{item}</span>
+                </div>
+                <span className="text-xs text-slate-500">Click to mark</span>
               </li>
             ))}
           </ul>

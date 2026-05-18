@@ -2,10 +2,10 @@ const Card = ({ children, className = "", onClick, Icon }) => {
   return (
     <div
       onClick={onClick}
-      className={`bg-white p-4 rounded-2xl shadow-sm hover:shadow-lg hover:bg-[#061a00] hover:text-white hover:-translate-y-1 transition-all duration-300 ${className}`}
+      className={`glass-card rounded-3xl p-5 hover:shadow-xl transition-all duration-300 cursor-pointer ${className}`}
     >
-      <div className="flex items-center gap-2">
-        {Icon && <Icon size={20} />}
+      <div className="flex items-center gap-3 text-slate-900">
+        {Icon && <Icon size={22} className="text-emerald-700" />}
         {children}
       </div>
     </div>

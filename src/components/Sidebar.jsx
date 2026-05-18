@@ -5,18 +5,13 @@ import TasteSyncLogo from "./Logo";
 
 const Sidebar = () => {
   return (
-    <div className="hidden md:flex flex-col fixed top-0 left-0 h-screen w-64 p-[2px] bg-gradient-to-b from-[#1d3e29] via-[#2f6f4e] to-[#061a00] shadow-2xl">
-      {/* INNER CONTAINER */}
-      <div className="flex flex-col h-full bg-[#061a00] rounded-r-2xl p-6">
-        {/* LOGO */}
+    <div className="hidden md:flex fixed inset-y-0 left-0 w-72 p-[2px] bg-gradient-to-b from-slate-950/90 via-slate-950 to-slate-950/90 shadow-2xl backdrop-blur-xl">
+      <div className="flex flex-col h-full rounded-r-3xl bg-slate-950/90 px-6 py-8 text-white border border-white/10">
         <div className="mb-10 animate-fade-in-scale">
-         <TasteSyncLogo size={36} />
-
-          {/* subtle divider */}
-          <div className="mt-3 h-[2px] w-12 bg-gradient-to-r from-green-400 to-transparent rounded-full" />
+          <TasteSyncLogo size={36} />
+          <div className="mt-4 h-[2px] w-16 bg-gradient-to-r from-emerald-400 to-transparent rounded-full" />
         </div>
 
-        {/* NAV */}
         <nav className="flex flex-col gap-3">
           {[
             { to: "/", icon: Home, label: "Home" },
@@ -25,39 +20,37 @@ const Sidebar = () => {
             { to: "/grocery", icon: ShoppingCart, label: "Grocery" },
           ].map((item) => {
             const Icon = item.icon;
-
             return (
-              <NavLink to={item.to}>
-  {({ isActive }) => (
-    <div
-      className={`relative group flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300
-      ${
-        isActive
-          ? "bg-gradient-to-r from-green-400/20 to-green-300/10 text-white shadow-md"
-          : "text-white/80 hover:text-white hover:bg-white/5"
-      }`}
-    >
-      {/* LEFT BAR */}
-      <div
-        className={`absolute left-0 top-0 h-full w-1 rounded-r transition-all duration-300
-        ${isActive ? "bg-green-400" : "bg-transparent"}`}
-      />
-
-      <Icon size={18} />
-
-      <span className="text-sm font-semibold tracking-wide">
-        {item.label}
-      </span>
-    </div>
-  )}
-</NavLink>
+              <NavLink key={item.to} to={item.to} end>
+                {({ isActive }) => (
+                  <div
+                    className={`relative flex items-center gap-3 rounded-3xl px-4 py-3 transition-all duration-300 ${
+                      isActive
+                        ? "bg-emerald-400/20 text-white shadow-[0_12px_30px_rgba(16,185,129,0.16)]"
+                        : "text-slate-200 hover:text-white hover:bg-white/15 hover:border-white/10"
+                    }`}
+                  >
+                    <div
+                      className={`absolute left-0 top-0 h-full w-1 rounded-r-full transition-all duration-300 ${
+                        isActive ? "bg-emerald-400" : "bg-transparent"
+                      }`}
+                    />
+                    <Icon size={18} />
+                    <span className="text-sm font-semibold tracking-wide">
+                      {item.label}
+                    </span>
+                  </div>
+                )}
+              </NavLink>
             );
           })}
         </nav>
 
-        {/* FOOTER (optional but makes it feel complete) */}
-        <div className="mt-auto mx-auto pt-6 text-xs text-white/40">
-          <p>© {new Date().getFullYear()} TasteSync</p>
+        <div className="mt-auto rounded-3xl border border-white/10 bg-white/5 p-4 text-xs text-slate-300 shadow-inner">
+          <p className="font-semibold text-slate-100">TasteSync</p>
+          <p className="mt-2 text-[11px] text-slate-400">
+            Your weekly meal experience, tailored and simple.
+          </p>
         </div>
       </div>
     </div>

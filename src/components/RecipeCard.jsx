@@ -4,50 +4,51 @@ import { useState } from "react";
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
   const [fav, setFav] = useState(false);
-
   if (!recipe) return null;
-
   return (
     <div
-      className="relative cursor-pointer bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition"
+      className="relative cursor-pointer overflow-hidden rounded-[28px] glass-card border border-slate-200/70 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-200/90 hover:shadow-xl"
       onClick={() => navigate(`/recipes/${recipe.id}`)}
     >
-      {/* CLICKABLE AREA */}
-      <div
-        onClick={() => navigate(`/recipes/${recipe.id}`)}
-        className="hover:-translate-y-1 transition-all duration-300"
-      >
+      <div className="relative overflow-hidden">
         <img
           src={recipe.image || "/fallback-food.jpg"}
-          className="w-full h-auto object-cover"
+          alt={recipe.name}
+          className="h-44 w-full object-cover transition-transform duration-500 hover:scale-105"
         />
-        <div className="p-3 flex flex-col ">
-          <div className="">
-            <h4 className="font-medium text-sm text-[#061a00]">
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950/80 to-transparent" />
+      </div>
+
+      <div className="p-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h4 className="text-base font-semibold text-slate-950 truncate">
               {recipe.name}
             </h4>
-            <span className="text-xs text-yellow-500">
-              ⭐ {recipe.rating}
-            </span>{" "}
+            <p className="text-xs uppercase tracking-[0.2em] text-emerald-700/90 mt-1">
+              {recipe.category || recipe.culture}
+            </p>
           </div>
+          <span className="rounded-full bg-emerald-50 px-3 py-1 text-[11px] font-semibold text-emerald-700 shadow-sm">
+            {recipe.kcal} kcal
+          </span>
+        </div>
 
-          <div className="flex justify-end mt-2">
-            <span className="text-xs text-gray-500">
-              {recipe.kcal} kcal
-            </span>{" "}
-          </div>
+        <div className="mt-3 flex items-center justify-between">
+          <span className="text-sm text-slate-500">
+            ⭐ {recipe.rating || 4.5}
+          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setFav(!fav);
+            }}
+            className="rounded-2xl border border-emerald-200 bg-emerald-50/90 px-3 py-1 text-sm text-emerald-800 transition hover:bg-emerald-100 hover:border-emerald-300"
+          >
+            {fav ? "❤️" : "🤍"}
+          </button>
         </div>
       </div>
-      {/* HEART ICON */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation(); // prevents navigation
-          setFav(!fav);
-        }}
-        className="absolute top-2 right-2 text-lg z-10"
-      >
-        {fav ? "❤️" : "🤍"}
-      </button>
     </div>
   );
 };
