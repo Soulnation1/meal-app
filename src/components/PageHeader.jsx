@@ -9,14 +9,14 @@ const PageHeader = ({ title, showBack = false, right }) => {
         {showBack && (
           <button
             onClick={() => navigate(-1)}
-            className="rounded-2xl border border-slate-200/80 bg-white/80 p-2 shadow-sm transition hover:-translate-y-0.5 hover:bg-emerald-50"
+            className="rounded-2xl border border-lime-500/20 bg-gray-800/80 p-2 shadow-sm transition hover:-translate-y-0.5 hover:bg-lime-500/10"
           >
             <ArrowLeft size={22} />
           </button>
         )}
         <div>
-          <h2 className="text-2xl font-semibold text-slate-900">{title}</h2>
-          <p className="text-sm text-slate-500">
+          <h2 className="text-2xl font-semibold text-white">{title}</h2>
+          <p className="text-sm text-gray-400">
             Healthy meals, simpler planning.
           </p>
         </div>

@@ -1,5 +1,5 @@
 :root {
-  color-scheme: light;
+  color-scheme: dark;
   font-family:
     Inter,
     ui-sans-serif,
@@ -8,15 +8,15 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #0f172a;
-  --surface: rgba(255, 255, 255, 0.82);
-  --surface-soft: rgba(229, 251, 241, 0.9);
-  --surface-border: rgba(16, 185, 129, 0.22);
-  --accent: #14b8a6;
-  --accent-soft: rgba(16, 185, 129, 0.24);
-  --accent-warm: #f59e0b;
-  --muted: #475569;
-  --dark: #0f172a;
+  color: #ffffff;
+  --surface: rgba(30, 30, 30, 0.95);
+  --surface-soft: rgba(50, 50, 50, 0.8);
+  --surface-border: rgba(57, 255, 20, 0.3);
+  --accent: #39ff14;
+  --accent-soft: rgba(57, 255, 20, 0.2);
+  --accent-warm: #39ff14;
+  --muted: #888888;
+  --dark: #1a1a1a;
 }
 
 html,
@@ -29,19 +29,8 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(16, 185, 129, 0.18),
-      transparent 28%
-    ),
-    radial-gradient(
-      circle at bottom right,
-      rgba(56, 189, 248, 0.14),
-      transparent 24%
-    ),
-    linear-gradient(180deg, #e8fffa 0%, #dffaf0 35%, #eff6ff 100%);
-  color: var(--dark);
+  background: #1a1a1a;
+  color: #ffffff;
 }
 
 button,
@@ -52,16 +41,16 @@ textarea {
 }
 
 .glass-panel {
-  background: rgba(245, 255, 250, 0.78);
-  border: 1px solid rgba(16, 185, 129, 0.18);
-  box-shadow: 0 34px 120px rgba(15, 23, 42, 0.14);
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  box-shadow: 0 34px 120px rgba(57, 255, 20, 0.1);
   backdrop-filter: blur(26px);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.86);
-  border: 1px solid rgba(16, 185, 129, 0.12);
-  box-shadow: 0 28px 90px rgba(15, 23, 42, 0.14);
+  background: rgba(40, 40, 40, 0.9);
+  border: 1px solid rgba(57, 255, 20, 0.15);
+  box-shadow: 0 28px 90px rgba(57, 255, 20, 0.08);
   backdrop-filter: blur(26px);
 }
 
@@ -74,8 +63,8 @@ textarea {
 
 .button-pill:hover {
   transform: translateY(-1px);
-  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
-  background-color: rgba(16, 185, 129, 0.12);
+  box-shadow: 0 18px 36px rgba(57, 255, 20, 0.2);
+  background-color: rgba(57, 255, 20, 0.15);
 }
 
 .no-scrollbar::-webkit-scrollbar {

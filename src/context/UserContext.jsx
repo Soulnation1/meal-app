@@ -14,6 +14,14 @@ export const UserProvider = ({ children }) => {
           activeCulture: "Blend",
         };
   });
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+
+    return saved ? JSON.parse(saved) : [];
+  });
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
@@ -23,8 +31,19 @@ export const UserProvider = ({ children }) => {
       activeCulture: culture,
     }));
   };
+  const toggleFavorite = (recipeId) => {
+    setFavorites((prev) => {
+      if (prev.includes(recipeId)) {
+        return prev.filter((id) => id !== recipeId);
+      }
+
+      return [...prev, recipeId];
+    });
+  };
   return (
-    <UserContext.Provider value={{ user, setUser, setActiveCulture }}>
+    <UserContext.Provider
+      value={{ user, setUser, setActiveCulture, favorites, toggleFavorite }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -108,34 +108,30 @@ const MealPlan = () => {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-        <div className="glass-card rounded-[32px] p-6 bg-gradient-to-br from-white via-emerald-50/90 to-white/95">
+        <div className="glass-card rounded-[32px] p-6 bg-gradient-to-br from-gray-800/80 via-lime-500/10 to-gray-900/80">
           <div className="flex items-center justify-between gap-4">
             <div>
-              <p className="text-sm uppercase tracking-[0.25em] text-slate-500">
-                Today’s intake
+              <p className="text-sm uppercase tracking-[0.25em] text-gray-400">
+                Today's intake
               </p>
-              <h3 className="mt-2 text-3xl font-semibold text-slate-900">
+              <h3 className="mt-2 text-3xl font-semibold text-white">
                 {totalCalories} kcal
               </h3>
             </div>
-            <span className="rounded-3xl bg-emerald-100 px-4 py-2 text-sm font-semibold text-emerald-800 shadow-sm">
+            <span className="rounded-3xl bg-lime-500/20 px-4 py-2 text-sm font-semibold text-lime-400 shadow-sm">
               {activeCulture}
             </span>
           </div>
           {lastUpdatedBy && (
-            <p className="mt-4 text-sm text-slate-600">
+            <p className="mt-4 text-sm text-gray-400">
               Last updated by{" "}
-              <span className="font-semibold text-slate-900">
-                {lastUpdatedBy}
-              </span>
+              <span className="font-semibold text-white">{lastUpdatedBy}</span>
             </p>
           )}
         </div>
 
         <div className="glass-card rounded-[32px] p-6">
-          <h4 className="text-base font-semibold text-slate-900">
-            Weekly view
-          </h4>
+          <h4 className="text-base font-semibold text-white">Weekly view</h4>
           <div className="mt-4 flex flex-wrap gap-3">
             {days.map((day, index) => (
               <button
@@ -143,8 +139,8 @@ const MealPlan = () => {
                 onClick={() => setActiveDay(index)}
                 className={`button-pill rounded-3xl border px-4 py-3 text-sm font-semibold transition ${
                   activeDay === index
-                    ? "border-emerald-500 bg-emerald-100 text-emerald-800"
-                    : "border-slate-200 bg-slate-50 text-slate-700 hover:border-emerald-300 hover:bg-emerald-50/90 hover:text-emerald-800"
+                    ? "border-lime-500/50 bg-lime-500/20 text-lime-400"
+                    : "border-gray-700 bg-gray-800/50 text-gray-400 hover:border-lime-500/30 hover:bg-gray-700/50 hover:text-lime-300"
                 }`}
               >
                 {day}
@@ -159,29 +155,29 @@ const MealPlan = () => {
           <div key={meal.title} className="glass-card rounded-[32px] p-6">
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-slate-500">
+                <p className="text-sm uppercase tracking-[0.2em] text-gray-400">
                   {meal.title}
                 </p>
-                <h4 className="mt-2 text-xl font-semibold text-slate-900">
+                <h4 className="mt-2 text-xl font-semibold text-white">
                   {currentPlan[meal.title]
                     ? currentPlan[meal.title].name
                     : meal.food}
                 </h4>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-gray-500">
                   {currentPlan[meal.title]
                     ? currentPlan[meal.title].kcal
                     : meal.kcal}{" "}
                   kcal
                 </p>
               </div>
-              <label className="inline-flex items-center gap-3 rounded-3xl border border-emerald-200 bg-emerald-50/90 px-4 py-3 shadow-sm">
+              <label className="inline-flex items-center gap-3 rounded-3xl border border-lime-500/30 bg-lime-500/10 px-4 py-3 shadow-sm">
                 <input
                   type="checkbox"
                   checked={checked[meal.title]}
                   onChange={() => toggleCheck(meal.title)}
-                  className="h-5 w-5 accent-emerald-700"
+                  className="h-5 w-5 accent-lime-400"
                 />
-                <span className="text-sm font-semibold text-emerald-800">
+                <span className="text-sm font-semibold text-lime-400">
                   Completed
                 </span>
               </label>

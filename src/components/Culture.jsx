@@ -14,18 +14,18 @@ const Culture = () => {
         : user.activeCulture;
 
   return (
-    <div className="glass-card rounded-3xl p-4 shadow-md border border-emerald-200/70">
+    <div className="glass-card rounded-3xl p-4 shadow-md border border-lime-500/20">
       <div className="flex items-center justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-slate-950">Culture Mode</p>
-          <p className="text-xs text-emerald-700">
+          <p className="text-sm font-semibold text-white">Culture Mode</p>
+          <p className="text-xs text-lime-400">
             Choose your flavor preferences
           </p>
         </div>
         <select
           value={user.activeCulture}
           onChange={(e) => setActiveCulture(e.target.value)}
-          className="rounded-full border border-emerald-200 bg-emerald-50/95 px-4 py-2 text-sm text-emerald-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-200"
+          className="rounded-full border border-lime-500/30 bg-lime-500/10 px-4 py-2 text-sm text-lime-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-lime-500/50"
         >
           {cultures.map((culture) => (
             <option key={culture} value={culture}>
@@ -37,9 +37,8 @@ const Culture = () => {
         </select>
       </div>
 
-      <p className="mt-4 text-sm text-slate-600">
-        Active:{" "}
-        <span className="font-semibold text-slate-900">{activeLabel}</span>
+      <p className="mt-4 text-sm text-gray-400">
+        Active: <span className="font-semibold text-white">{activeLabel}</span>
       </p>
     </div>
   );

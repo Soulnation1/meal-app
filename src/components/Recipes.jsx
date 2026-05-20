@@ -3,36 +3,7 @@ import { useState } from "react";
 import { useUser } from "../context/UserContext";
 import PageHeader from "./PageHeader";
 import Culture from "./Culture";
-
-const recipes = [
-  {
-    id: 1,
-    name: "Amala & Ewedu",
-    category: "Lunch",
-    culture: "Yoruba",
-    kcal: 700,
-    image: "/amala.jpg",
-    rating: 4.8,
-  },
-  {
-    id: 2,
-    name: "Akpu & Egusi",
-    category: "Lunch",
-    culture: "Igbo",
-    kcal: 700,
-    image: "/nsala.jpg",
-    rating: 4.6,
-  },
-  {
-    id: 3,
-    name: "Jollof Rice",
-    category: "Lunch",
-    culture: "All",
-    kcal: 600,
-    image: "/jollof.jpg",
-    rating: 4.9,
-  },
-];
+import {recipes} from "../data/recipes";
 
 const Recipes = () => {
   const [activeFilter, setActiveFilter] = useState("All");
@@ -42,12 +13,26 @@ const Recipes = () => {
   const blendedCulture = blendRotation[todayIndex % blendRotation.length];
   const activeCulture =
     user.activeCulture === "Blend" ? blendedCulture : user.activeCulture;
+const filteredRecipes = recipes.filter(
+  (recipe) => {
+    const matchesCategory =
+      activeFilter === "All"
+        ? true
+        : recipe.category === activeFilter;
 
-  const filteredRecipes =
-    activeFilter === "All"
-      ? recipes
-      : recipes.filter((recipe) => recipe.category === activeFilter);
+    const matchesCulture =
+      user.activeCulture === "All"
+        ? true
+        : recipe.culture ===
+            user.activeCulture ||
+          recipe.culture === "All";
 
+    return (
+      matchesCategory &&
+      matchesCulture
+    );
+  }
+);
   const finalRecipes = filteredRecipes.filter(
     (recipe) =>
       activeCulture === "All" ||
@@ -60,7 +45,7 @@ const Recipes = () => {
       <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
         <div>
           <PageHeader showBack title="Recipes" />
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-gray-400">
             Discover meals that fit your preferences.
           </p>
         </div>
@@ -72,7 +57,7 @@ const Recipes = () => {
           <input
             type="text"
             placeholder="Search recipes..."
-            className="w-full rounded-3xl border border-emerald-200/70 bg-emerald-50/95 px-5 py-3 text-slate-700 shadow-sm outline-none transition focus:border-emerald-400 focus:ring-2 focus:ring-emerald-100"
+            className="w-full rounded-3xl border border-lime-500/20 bg-gray-800/50 px-5 py-3 text-white shadow-sm outline-none transition focus:border-lime-500/50 focus:ring-2 focus:ring-lime-500/30 placeholder-gray-500"
           />
         </div>
 
@@ -83,8 +68,8 @@ const Recipes = () => {
               onClick={() => setActiveFilter(item)}
               className={`button-pill rounded-full px-4 py-2 text-sm font-semibold transition ${
                 activeFilter === item
-                  ? "bg-emerald-600 text-white shadow-lg"
-                  : "bg-emerald-50 text-emerald-800 shadow-sm hover:bg-emerald-100 hover:text-emerald-900"
+                  ? "bg-lime-500 text-gray-950 shadow-lg shadow-lime-500/50"
+                  : "bg-gray-800/50 text-gray-300 shadow-sm hover:bg-gray-700/70 hover:text-lime-300"
               }`}
             >
               {item}
